@@ -1,0 +1,1 @@
+# Agent reflexe basé sur des modèles, des buts avec une notion d'utilité
