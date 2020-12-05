@@ -17,17 +17,18 @@ weather = "cloudy"
 
 # Define a dictionary containing a list of responses for each message
 responses = {
-  "what's your name?": [
-      "my name is {0}".format(name),
-      "they call me {0}".format(name),
-      "I go by {0}".format(name)
-   ],
-  "what's today's weather?": [
-      "the weather is {0}".format(weather),
-      "it's {0} today".format(weather)
+    "what's your name?": [
+        "my name is {0}".format(name),
+        "they call me {0}".format(name),
+        "I go by {0}".format(name)
     ],
-  "default": ["default message"]
+    "what's today's weather?": [
+        "the weather is {0}".format(weather),
+        "it's {0} today".format(weather)
+    ],
+    "default": ["default message"]
 }
+
 
 # Use random.choice() to choose a matching response
 def respond(message):
@@ -79,7 +80,7 @@ def respond(message):
         # Return a random question
         return random.choice(responses["question"])
     # Return a random statement
-    return random.choice(responses["statement"])
+    return replace_pronouns(message)
 
 
 # Define replace_pronouns()
@@ -117,11 +118,12 @@ def match_rule(rules, message):
 
 
 # Test match_rule
+'''
 print(match_rule(rules, "do you remember your last birthday"))
-
 print(replace_pronouns("my last birthday"))
 print(replace_pronouns("when you went to Florida"))
 print(replace_pronouns("I had my own castle"))
+'''
 
 
 def send_message(message):

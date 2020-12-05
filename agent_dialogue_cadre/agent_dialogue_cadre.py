@@ -3,12 +3,12 @@ import random
 import re
 import datetime
 
-user_template = "[USER] "
+user_template = "> "
 bot_template = "[BOT] {}"
 
 username = None
 
-# Usefull information for our agent
+# Informations de l'agent
 # Travel = ["ville de depart", "ville d'arrivee"]
 voyage = [None] * 2
 # Aller simple ou aller-retour
@@ -20,6 +20,8 @@ date_arrivee = None
 
 
 def find_name(message):
+    # à l'aide des regex, nous allons rechercher le nom de l'utilisateur
+    # cela rend l'agent plus amical
     name = None
     name_keyboard = re.compile("name|call")
     capitalized_name = re.compile("[A-Z]{1}[a-z]*")
@@ -51,6 +53,14 @@ def bot_talk(msg):
 
 
 def build_reservation():
+    # Voici la boucle principale de notre programme :
+    # Il va nous permettre une interaction fluide avec l'agent pour réserver un vol
+    # Les boucles traduisent le déroulement normal de la discussion : nous pouvons
+    # interrompre le programme en tapant "exit"
+    # Par défaut, le programme s'arrête quand nous avons fini le dialogue
+
+    # Le plus de ce code : la vérification des réponses fournis par l'utilisateur
+
     global voyage, date_depart, date_arrivee, is_aller_simple
     # What city are you leaving from ?
     bot_talk("What city are you leaving from ?")
@@ -58,19 +68,26 @@ def build_reservation():
     voyage[0] = msg
     # Where are you going ?
     bot_talk("Where are you going ?")
-    msg = input(user_template)
-    voyage[1] = msg
+    i = False
+    while i is False:
+        msg = input(user_template)
+        if msg != voyage[0]:
+            voyage[1] = msg
+            i = True
+        else:
+            bot_talk("It would be more profitable not to take tickets to stand still")
+            bot_talk("Where are you going ?")
     # What date do you want to leave ?
-    ## Today or not ?
+    # Today or not ?
     bot_talk("Do you want to leave today ?")
     pattern = re.compile(r'[2-9][0-9][0-9][0-9]-[0-9][0-9]-[0-3][0-9]')
     t = False
     while t is False:
         msg = input(user_template)
-        if msg.lower() == "yes":
-            date_depart = datetime.date.today()
+        if "yes" in msg.lower():
+            date_depart = str(datetime.date.today())
             t = True
-        elif msg.lower() == "no":
+        elif "no" in msg.lower():
             bot_talk("What date do you want to leave ? (YYYY-mm-dd)")
             k = False
             while k is False:
@@ -78,7 +95,11 @@ def build_reservation():
                 submission = pattern.findall(msg)
                 if len(submission) != 0:
                     date_depart = submission[0]
-                    k = True
+                    if str(datetime.date.today()) > date_depart:
+                        bot_talk("You can't leave from the past")
+                        bot_talk("What date do you want to leave ? (YYYY-mm-dd)")
+                    else:
+                        k = True
                 else:
                     bot_talk("Incorrect format ! try again...")
             t = True
@@ -89,9 +110,9 @@ def build_reservation():
     t = False
     while t is False:
         msg = input(user_template)
-        if msg.lower() == "yes":
+        if "yes" in msg.lower():
             is_aller_simple = True
-            ## If yes, do you want to go from <FROM> to <TO> on <DATE>?
+            # If yes, do you want to go from <FROM> to <TO> on <DATE>?
             bot_talk("Do you want to go from {} to {} on {} ?".format(
                 voyage[0],
                 voyage[1],
@@ -100,17 +121,17 @@ def build_reservation():
             k = False
             while k is False:
                 msg = input(user_template)
-                if msg.lower() == "yes":
+                if "yes" in msg.lower():
                     book_a_flight()
                     return True
-                elif msg.lower() == "no":
+                elif "no" in msg.lower():
                     cancel()
                     # Recursivity
                     build_reservation()
                 else:
                     bot_talk("Please, respond at my request !")
             t = True
-        elif msg.lower() == "no":
+        elif "no" in msg.lower():
             is_aller_simple = False
             bot_talk("What date do you want to return ? (YYYY-mm-dd)")
             pattern = re.compile(r'[2-9][0-9][0-9][0-9]-[0-9][0-9]-[0-3][0-9]')
@@ -120,26 +141,27 @@ def build_reservation():
                 submission = pattern.findall(msg)
                 if len(submission) != 0:
                     date_arrivee = submission[0]
-                    # Do you want to go from <FROM> to <TO> on <DATE> returning on <RETURN>
-                    bot_talk("Do you want to go from {} to {} on {} returning on {} ?".format(
-                        voyage[0],
-                        voyage[1],
-                        date_depart,
-                        date_arrivee
-                    ))
-                    l = False
-                    while l is False:
-                        msg = input(user_template)
-                        if msg.lower() == "yes":
-                            book_a_flight()
-                            return True
-                        elif msg.lower() == "no":
-                            cancel()
-                            # Recursivity
-                            build_reservation()
-                        else:
-                            bot_talk("Please, respond at my request !")
-                    k = True
+                    if date_arrivee < date_depart:
+                        bot_talk("Oops, do you want to arrive before you even leave ?")
+                        bot_talk("What date do you want to return ? (YYYY-mm-dd)")
+                    else:
+                        # Do you want to go from <FROM> to <TO> on <DATE> returning on <RETURN>
+                        bot_talk("Do you want to go from {} to {} on {} returning on {} ?".format(
+                            voyage[0],
+                            voyage[1],
+                            date_depart,
+                            date_arrivee
+                        ))
+                        l = False
+                        while l is False:
+                            msg = input(user_template)
+                            if "yes" in msg.lower():
+                                book_a_flight()
+                                return True
+                            elif "no" in msg.lower():
+                                cancel()
+                            else:
+                                bot_talk("Please, respond at my request !")
                 else:
                     bot_talk("Incorrect format ! try again...")
             t = True
@@ -149,6 +171,8 @@ def build_reservation():
 
 def cancel():
     bot_talk("Okay, you are complex...")
+    # Recursivity
+    build_reservation()
 
 
 def book_a_flight():
@@ -160,15 +184,11 @@ def book_a_flight():
             date_depart
         ))
     else:
-        bot_talk("I resume ... Your flight : {} -> {} for {}\n"
-                 "                  you return at {} for {} !\n"
-                 "Good flight !".format(
-                     voyage[0],
-                     voyage[1],
-                     date_depart,
-                     voyage[1],
-                     date_arrivee
-                 ))
+        bot_talk("I will resume ...")
+        bot_talk("Your flight : {} -> {} for {}".format(voyage[0], voyage[1], date_depart))
+        bot_talk("You return at {} for {} !".format(voyage[0], date_arrivee))
+        bot_talk("Good flight")
+
 
 ######################################################
 # SIMULATION

@@ -14,15 +14,15 @@ MAX_MEFIANCE = 15
 MAX_AMOUR = 15
 
 multi_responses = {
-    "i like Heuss L'enfoire": [
-        "La moulaga !",
-        "Grosse moulax",
+    "i like football": [
+        "Me too !",
+        "Ok, tell me more about "
     ],
     "Do you know Yan Fulconis ?": [
         "SoprYan !",
         "Yeah, Chiesa hates him a lot..."
     ],
-    "if i talk about Jul, will you like it ?": [
+    "If i talk about Jul, will you like it ?": [
         "x(..."
     ]
 }
@@ -170,7 +170,7 @@ def customize_responses():
         username = "Anonymous user"
     # return a break (if false) or continue discuss (if true)
     if LVL_AMOUR == MAX_AMOUR:
-        bot_talk("Wow... {}, would you be my friend ?".format(username))
+        bot_talk("Wow... {}, would you being my friend ?".format(username))
         response = input(user_template)
         if response == "no":
             bot_talk(":(")
@@ -178,10 +178,10 @@ def customize_responses():
             bot_talk("Cool !")
         return True
     if LVL_MEFIANCE == MAX_MEFIANCE:
-        bot_talk("You are too crazy {} ! bye !! aaaaaah ...".format(username))
+        bot_talk("You are too crazy {} ! bye !".format(username))
         return False
     if LVL_COLERE_PEUR == MAX_PEUR_COLERE:
-        bot_talk("{} ... You disgust me ... poor morron !".format(username))
+        bot_talk("{} ... You are so annoying !".format(username))
         return False
 
 
