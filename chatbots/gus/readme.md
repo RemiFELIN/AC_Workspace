@@ -22,11 +22,6 @@ Un petit résumé de la conversation sera proposé à la fin du processus.
 
 ![Exécution du programme](https://github.com/RemiFELIN/AC_Workspace/blob/main/chatbots/gus/img/gus_v2_output.png)
 
-Cet agent a été réalisé dans le but de proposer à l'utilisateur la possibilité de réserver un vol de manière
-interactive. Le processus suit le plan suivant :
-
-![schema](https://github.com/RemiFELIN/AC_Workspace/blob/main/chatbots/gus/img/schema.png)
-
 Cette version a été implémenté de sorte à ce que celle-ci utilise le même système de "frame" abordé lors des séances
 de cours. Je trouve cette solution plus élégante même si on aurait pu pousser les performances du programme un peu plus 
 loin. Par exemple, utiliser NLTK ou SpaCy pour détecter les mots simplement et retirer le système des regex.
