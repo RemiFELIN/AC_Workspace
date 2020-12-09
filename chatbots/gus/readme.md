@@ -24,7 +24,7 @@ Un petit résumé de la conversation sera proposé à la fin du processus.
 
 Cette version a été implémenté de sorte à ce que celle-ci utilise le même système de "frame" abordé lors des séances
 de cours. Je trouve cette solution plus élégante même si on aurait pu pousser les performances du programme un peu plus 
-loin. Par exemple, utiliser NLTK ou SpaCy pour détecter les mots simplement et retirer le système des regex.
+loin. Par exemple, utiliser NLTK ou SpaCy pour détecter les mots sans uiliser le système des regex et privilégier les corpus.
 
 Les regex sont assez performant si on respecte un format de message identique à celui présent sur l'exemple ci-dessus. 
 Ils montrent évidemment leur limites dans des cas plus complexes.
