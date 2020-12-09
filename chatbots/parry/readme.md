@@ -1,6 +1,6 @@
 # PARRY
 
-![Exécution du programme](https://github.com/RemiFELIN/AC_Workspace/blob/main/chatbots/parray/img/parry_output.png)
+![Exécution du programme](https://github.com/RemiFELIN/AC_Workspace/blob/main/chatbots/parry/img/parry_output.png)
 
 "Parry" est une évolution du chatbot "[Eliza](https://github.com/RemiFELIN/AC_Workspace/tree/main/chatbots/eliza/eliza.py)", il a donc été directement développé
 à partir du squelette de ce dernier. Différents concepts ont été ajoutés afin de lui donner une personnalité.
