@@ -1,0 +1,65 @@
+[{
+		"slot": "ORIGIN",
+		"type": "city",
+		"question": ["What city are you leaving from?"]
+	},
+	{
+		"slot": "DEST",
+		"type": "city",
+		"question": [
+			"Where are you going ?",
+			"I see you've had a difficult week, where do you want to go to take your mind off it ?",
+			"the world is huge ! Which city would you like to explore ?"
+		]
+	},
+	{
+		"slot": "DEP DATE",
+		"type": "date",
+		"question": [
+			"What day would you like to leave ?",
+			"They announce good weather for the coming days ! what day should I reserve a ticket for ?",
+			"There are only a few tickets left ! What day do you want to leave ?"
+		]
+	},
+	{
+		"slot": "DEP TIME",
+		"type": "time",
+		"question": [
+			"What time would you like to leave ?",
+			"what time do you want to board ? don't tell me 3am my friend I wouldn't believe it :)",
+			"What's the best time for you to go on an adventure ?"
+		]
+	},
+	{
+		"slot": "AIRLINE",
+		"type": "line",
+		"question": [
+			"What is your preferred airline ?",
+			"Airbus, AirFrance, Fly Emirates, ... but which airline do you prefer?",
+			"if you are not afraid of flying, tell me the airline you would like to have for your flight"
+		],
+		"keywords": [
+			"Airbus",
+			"Fly Emirates",
+			"Air France"
+		]
+	},
+
+	{
+		"slot": "ARR DATE",
+		"type": "date",
+		"question": [
+			"What day would you like to arrive ?",
+			"What day do you want to come back from your incredible journey ?",
+			"tell me what day you think is best for you to come back"
+		]
+	},
+	{
+		"slot": "ARR TIME",
+		"type": "time",
+		"question": [
+			"When do you want to arrive ?",
+			"When do you want to come home ? Your cat would certainly be worried about not seeing you for a long time."
+		]
+	}
+]
